@@ -1,7 +1,8 @@
 export const state = () => ({
 	showAddFiles: false,
 	showAddProject: true,
-	showProject: false
+	showProject: false,
+	highlight: null
 });
 
 export const mutations = {
@@ -13,6 +14,9 @@ export const mutations = {
 	},
 	setProject(state, value) {
 		state.showProject = value;
+	},
+	setHighlight(state, value) {
+		state.highlight = value;
 	}
 };
 export const actions = {
@@ -33,5 +37,8 @@ export const actions = {
 	},
 	hideProject({ commit }) {
 		commit('setProject', false);
+	},
+	setHighlight({ commit }, value) {
+		commit('setHighlight', value);
 	}
 };

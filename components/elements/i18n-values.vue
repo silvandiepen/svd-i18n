@@ -10,10 +10,10 @@
 				<h6 class="i18n-data__key">
 					{{ key }}
 				</h6>
-				<I18nValues :data="value" />
+				<I18nValues :path="`${path}.${key}`" :data="value" />
 			</template>
 			<template v-else>
-				<I18nValue :data="[key, value]" :child="true" />
+				<I18nValue :data="[key, value]" :child="true" :path="`${path}.${key}`" />
 			</template>
 		</li>
 	</ul>
@@ -36,7 +36,16 @@ export default {
 		child: {
 			type: Boolean,
 			default: false
+		},
+		path: {
+			type: String,
+			default: ''
 		}
+	},
+	data() {
+		return {
+			higlight: null
+		};
 	},
 	methods: {
 		isGroup(value) {

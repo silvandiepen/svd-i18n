@@ -56,6 +56,15 @@ export default {
 <style lang="scss">
 @import '~tools';
 
+.highlight {
+	position: fixed;
+	top: 0;
+	background-color: color(Plum);
+	color: white;
+	right: 0;
+	padding: 1rem;
+	z-index: 100;
+}
 .header {
 	// Header styles
 	// position: fixed;
