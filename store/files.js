@@ -6,30 +6,41 @@ export const state = () => ({
 });
 
 export const mutations = {
-	setFileset(state, file) {
+	setFiles(state, file) {
 		if (state.current) {
 			Vue.set(state.set[state.current].data, file.filename.split('.')[0], file);
 		}
 	},
-	newFileset(state, value) {
+	newProject(state, value) {
 		state.set[value] = { name: value, data: {} };
 		state.current = value;
 	}
 };
 
 export const getters = {
-	getCurrentSet: (state) => {
+	getCurrentProject: (state) => {
 		return state.set[state.current];
 	},
-	getCurrentName: (state) => {
-		return state.current;
+	getCurrentProjectName: (state) => {
+		if (state.current) {
+			return state.current;
+		} else {
+			return null;
+		}
+	},
+	getCurrentProjectLanguages: (state) => {
+		if (state.set[state.current]) {
+			return Object.keys(state.set[state.current].data);
+		} else {
+			return null;
+		}
 	}
 };
 export const actions = {
-	createFileset({ commit }, value) {
-		commit('newFileset', value);
+	createProject({ commit }, value) {
+		commit('newProject', value);
 	},
-	setFiles({ commit }, value) {
-		commit('setFileset', value);
+	setProjectFiles({ commit }, value) {
+		commit('setFiles', value);
 	}
 };

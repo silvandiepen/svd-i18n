@@ -1,20 +1,37 @@
 export const state = () => ({
-	showUpload: false
+	showAddFiles: false,
+	showAddProject: true,
+	showProject: false
 });
 
 export const mutations = {
-	toggleUpload(state) {
-		state.showUpload = !state.showUpload;
+	setAddFiles(state, value) {
+		state.showAddFiles = value;
 	},
-	setUpload(state, value) {
-		state.showUpload = value;
+	setAddProject(state, value) {
+		state.showAddProject = value;
+	},
+	setProject(state, value) {
+		state.showProject = value;
 	}
 };
 export const actions = {
-	showUpload({ commit }) {
-		commit('setUpload', true);
+	showAddFiles({ commit }) {
+		commit('setAddFiles', true);
 	},
-	hideUpload({ commit }) {
-		commit('setUpload', false);
+	hideAddFiles({ commit }) {
+		commit('setAddFiles', false);
+	},
+	showAddProject({ commit }) {
+		commit('setAddProject', true);
+	},
+	hideAddProject({ commit }) {
+		commit('setAddProject', false);
+	},
+	showProject({ commit }) {
+		commit('setProject', true);
+	},
+	hideProject({ commit }) {
+		commit('setProject', false);
 	}
 };

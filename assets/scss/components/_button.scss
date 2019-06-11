@@ -1,0 +1,37 @@
+.button {
+	padding: 0.25rem 0.75rem;
+	display: flex;
+	border: none;
+	min-width: 2rem;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+	background-color: color(PurpleDark, 0.85);
+	border: 1px solid color(PurpleDark);
+	color: color(White);
+	border-radius: $base-border-radius;
+	&:focus {
+		background-color: color(PurpleLight);
+		outline: none;
+	}
+	&:hover {
+		background-color: color(PurpleDark, 0.95);
+	}
+	&__icon {
+		line-height: 2rem;
+		--stroke: 0.15em;
+		font-size: 14px;
+	}
+	&__text {
+		display: inline-block;
+		line-height: 2rem;
+		& + .button__icon {
+			margin-left: 0.5rem;
+		}
+	}
+	&__icon {
+		& + .button__text {
+			margin-left: 0.5rem;
+		}
+	}
+}
