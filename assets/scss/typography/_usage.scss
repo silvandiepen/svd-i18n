@@ -1,0 +1,23 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: inherit;
+  &.sub {
+    font-weight: 400;
+  }
+}
+
+
+h4{
+  font-size: rem(18);
+}
+h5{
+  font-size: 1rem;
+}
+
+h6{
+  font-size: rem(14);
+}

@@ -1,23 +1,19 @@
-<template lang="pug">
-div
-	header
-		row(center)
-			column(small="1", medium="2:3")
-				h3.logo i18n
-	main.bg-white
-		<nuxt></nuxt>
-	svd-footer
+<template>
+	<div class="layout layout-default">
+		<layout-header />
+		<nuxt />
+		<layout-footer />
+	</div>
 </template>
-<style lang="scss">
-@import "~svd-style/ext";
-header {
-  padding: grid(1);
-}
-</style>
+
 <script>
-import svdFooter from "svd-footer/src/components/svd-footer.vue";
+import LayoutHeader from '~/components/layout/header.vue';
+import LayoutFooter from '~/components/layout/footer.vue';
 
 export default {
-  components: { svdFooter }
+	components: {
+		LayoutHeader,
+		LayoutFooter
+	}
 };
 </script>
