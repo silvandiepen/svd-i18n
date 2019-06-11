@@ -37,10 +37,10 @@
 					<ul class="files__list">
 						<li v-for="(file, index) in i18nFiles" :key="index" class="files__file">
 							<div class="i18n-data">
-								<h3>{{ file.filename }}</h3>
-								<ul class="i18n-data__list">
-									<i18nValues :data="file.data"></i18nValues>
-								</ul>
+								<h6 class="i18n-data__key">
+									{{ file.filename }}
+								</h6>
+								<i18nValues :data="file.data"></i18nValues>
 							</div>
 						</li>
 					</ul>
@@ -177,6 +177,9 @@ export default {
 }
 
 .files {
+	&__file {
+		width: 100%;
+	}
 	&__list {
 		display: flex;
 		flex-wrap: nowrap;

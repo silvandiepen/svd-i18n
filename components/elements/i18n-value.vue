@@ -2,7 +2,7 @@
 	<div class="i18n-data__values">
 		<input class="i18n-data__label" type="text" :value="data[0]" />
 		<input v-if="data[1].length < 100" class="i18n-data__value" type="text" :value="data[1]" />
-		<textarea v-if="data[1].length > 99" class="i18n-data__value" type="text" :value="data[1]" />
+		<textarea v-if="data[1].length > 99" class="i18n-data__value" type="text" :value="data[1]" resize="false" />
 	</div>
 </template>
 

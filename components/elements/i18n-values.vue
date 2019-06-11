@@ -1,18 +1,20 @@
 <template>
 	<ul class="i18n-data__list">
-		<li v-for="(value, key, idx) in data" :key="idx" class="i18n-data__item">
-			<div v-if="typeof value == 'object'">
-				<h5 v-if="child" class="i18n-data__key">
-					{{ key }}
-				</h5>
-				<h6 v-else class="i18n-data__key i18n-data__key--child">
+		<li
+			v-for="(value, key, idx) in data"
+			:key="idx"
+			class="i18n-data__item"
+			:class="[isGroup(value) ? 'i18n-data__item--group' : 'i18n-data__item--single']"
+		>
+			<template v-if="isGroup(value)">
+				<h6 class="i18n-data__key">
 					{{ key }}
 				</h6>
 				<I18nValues :data="value" />
-			</div>
-			<div v-else-if="typeof value == 'string'">
+			</template>
+			<template v-else>
 				<I18nValue :data="[key, value]" :child="true" />
-			</div>
+			</template>
 		</li>
 	</ul>
 </template>
@@ -35,6 +37,15 @@ export default {
 			type: Boolean,
 			default: false
 		}
+	},
+	methods: {
+		isGroup(value) {
+			if (typeof value == 'object') {
+				return true;
+			} else {
+				return false;
+			}
+		}
 	}
 };
 </script>
@@ -46,23 +57,53 @@ export default {
 	flex-shrink: 0;
 	&__list {
 		width: 100%;
+		position: relative;
+		display: block;
 	}
 	&__key {
-		background-color: color(IceLight);
 		padding: 1rem;
+		// padding-left: 0;
+		display: block;
 		& + ul {
 			margin: 0;
 		}
 	}
 	&__item {
+		position: relative;
 		display: block;
 		width: 100%;
 		min-width: 320px;
-		border-left: 1px solid color(IceLight);
-		border-bottom: 1px solid color(IceLight);
-		padding-left: grid(0.5);
+		padding-left: 1rem;
 		&:last-child {
 			border-bottom: 0;
+		}
+		&::before {
+			content: '';
+			width: 1rem;
+			height: 1rem;
+			background-image: linear-gradient(to left, color(Skyblue), color(Skyblue)),
+				linear-gradient(to bottom, color(Skyblue), color(Skyblue));
+			background-size: 100% 1px, 1px 100%;
+			background-position: bottom left, bottom left;
+			background-repeat: no-repeat, no-repeat;
+			position: absolute;
+			left: 0;
+		}
+		&--single {
+			&::before {
+				// top: 0rem;
+				top: -1rem;
+				height: 100%;
+			}
+		}
+		&--group {
+			&::before {
+				background-image: linear-gradient(to left, color(Purple, 1), color(Purple, 1)),
+					linear-gradient(to bottom, color(Purple, 0), color(Purple, 1));
+				width: 0.5rem;
+				height: calc(100% - 2rem);
+				bottom: calc(100% - 1.75rem);
+			}
 		}
 
 		dl {
@@ -71,8 +112,8 @@ export default {
 			dd,
 			dt {
 				width: 50%;
-				padding: 1rem;
-				font-size: 1rem;
+				padding: 0.75rem;
+				font-size: 0.75rem;
 			}
 		}
 	}
