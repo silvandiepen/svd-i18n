@@ -1,11 +1,33 @@
 <template>
 	<main class="page page--home">
-		<section class="upload__section" :class="[i18nFiles.length > 0 ? '' : 'upload__section--active']">
+		<section v-if="showUpload" class="upload__section" :class="[currentFileset ? '' : 'upload__section--active']">
 			<div class="row center">
 				<div class="column small-full medium-half">
-					<div class="row">
+					<div v-if="!currentSetName" class="row">
+						<div class="column small-full">
+							<fieldset>
+								<label>New fileset</label>
+								<input v-model="fileset" type="text" />
+								<button class="button" @click="saveFileset()">
+									<span class="button__text">Save fileset</span>
+									<span class="button__icon icon-upload"></span>
+								</button>
+							</fieldset>
+						</div>
+					</div>
+					<div v-if="currentSetName" class="row">
+						<div class="column small-full">
+							<h3>{{ currentSetName }}</h3>
+							<p v-if="files.length < 1">
+								Add files to your fileset
+							</p>
+
+							<button v-if="files.length < 1" class="upload__add-button button" @click="addFiles()">
+								<span class="button__icon icon-add"></span>
+							</button>
+						</div>
 						<div class="column small-full hide-upload">
-							<label>Files </label>
+							<label>Files</label>
 							<input id="files" ref="files" accept=".json" type="file" multiple @change="handleFilesUpload()" />
 						</div>
 						<div class="column small-full">
@@ -17,7 +39,7 @@
 									</div>
 								</li>
 							</ul>
-							<div class="column small-full upload__buttons">
+							<div v-if="files.length > 0" class="column small-full upload__buttons">
 								<button class="upload__add-button button" @click="addFiles()">
 									<span class="button__icon icon-add"></span>
 								</button>
@@ -31,11 +53,11 @@
 				</div>
 			</div>
 		</section>
-		<section class="files">
+		<section v-if="currentFileset" class="files">
 			<div class="row center">
 				<div class="column small-full">
 					<ul class="files__list">
-						<li v-for="(file, index) in i18nFiles" :key="index" class="files__file">
+						<li v-for="(file, index) in currentFileset.data" :key="index" class="files__file">
 							<div class="i18n-data">
 								<h6 class="i18n-data__key">
 									{{ file.filename }}
@@ -51,8 +73,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-// import { createHash } from 'crypto';
 export default {
 	components: {
 		i18nValues: () => import('~/components/elements/i18n-values.vue')
@@ -62,13 +82,27 @@ export default {
     */
 	data() {
 		return {
-			files: []
+			files: [],
+			fileset: null
 		};
 	},
 	computed: {
-		i18nFiles: {
+		showUpload: {
 			get() {
-				return this.$store.state.files.files;
+				return this.$store.state.ui.showUpload;
+			},
+			set(value) {
+				this.$store.dispatch('ui/showUpload', value);
+			}
+		},
+		currentFileset: {
+			get() {
+				return this.$store.getters['files/getCurrentSet'];
+			}
+		},
+		currentSetName: {
+			get() {
+				return this.$store.getters['files/getCurrentName'];
 			}
 		}
 	},
@@ -82,6 +116,9 @@ export default {
 		addFiles() {
 			this.$refs.files.click();
 		},
+		saveFileset() {
+			this.$store.dispatch('files/createFileset', this.fileset);
+		},
 		submitFiles() {
 			const _this = this;
 			// var files = evt.target.files; // FileList object
@@ -91,46 +128,10 @@ export default {
 				const reader = new FileReader();
 				reader.readAsText(f);
 				reader.addEventListener('loadend', (e) => {
-					_this.$store.commit('files/add', { filename: f.name, data: JSON.parse(e.target.result) });
+					_this.$store.dispatch('files/setFiles', { filename: f.name, data: JSON.parse(e.target.result) });
+					_this.showUpload = false;
 				});
 			}
-		},
-
-		/*
-        Submits files to the server
-      */
-		__submitFiles() {
-			/*
-          Initialize the form data
-        */
-			let formData = new FormData();
-
-			/*
-          Iteate over any file sent over appending the files
-          to the form data.
-        */
-			for (var i = 0; i < this.files.length; i++) {
-				let file = this.files[i];
-
-				formData.append('files[' + i + ']', file);
-			}
-
-			/*
-          Make the request to the POST /select-files URL
-        */
-			axios
-				.post('files', formData, {
-					headers: {
-						'Content-Type': 'multipart/form-data'
-					}
-				})
-				.then((response) => {
-					console.log(response.data);
-					console.log('SUCCESS!!');
-				})
-				.catch(function() {
-					console.log('FAILURE!!');
-				});
 		},
 
 		/*
@@ -176,6 +177,22 @@ export default {
 	height: 0;
 }
 
+fieldset {
+	padding: 2rem;
+	background-color: color(IceLight, 0.5);
+	border: 1px solid color(IceLight);
+	border-radius: $base-border-radius;
+	input[type='text'] {
+		border: 1px solid color(Ice);
+		padding: 1rem;
+		font-size: 1rem;
+		border-radius: $base-border-radius;
+	}
+	.button {
+		display: inline-flex;
+	}
+}
+
 .files {
 	&__file {
 		width: 100%;
@@ -197,6 +214,7 @@ export default {
 		transition: all $base-transition ease-in-out;
 		border-bottom: 1px solid color(IceLight);
 		&--active {
+			max-height: 100vh;
 			padding: grid(4) 0;
 		}
 	}
@@ -211,7 +229,8 @@ export default {
 	}
 	&__item {
 		position: relative;
-		background-color: color(IceLight);
+		background-color: color(IceLight, 0.5);
+		border: 1px solid color(IceLight);
 		border-radius: $base-border-radius;
 		& + & {
 			margin-top: 0.25rem;
@@ -268,13 +287,5 @@ export default {
 			margin-left: 0.5rem;
 		}
 	}
-}
-
-.intro {
-	height: 100vh;
-	width: 100vw;
-	display: flex;
-	align-items: center;
-	justify-content: center;
 }
 </style>

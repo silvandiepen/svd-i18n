@@ -3,6 +3,15 @@
 		<h3 class="header__logo">
 			i18n
 		</h3>
+		<div class="header__details">
+			<h4>
+				{{ currentSet }}
+			</h4>
+			<button class="button" @click="showUpload">
+				<span class="button__icon icon-add"></span>
+				<span class="button__text">Add files</span>
+			</button>
+		</div>
 	</header>
 </template>
 
@@ -13,6 +22,18 @@ export default {
 		return {
 			projectName: project.name
 		};
+	},
+	computed: {
+		currentSet: {
+			get() {
+				return this.$store.getters['files/getCurrentName'];
+			}
+		}
+	},
+	methods: {
+		showUpload() {
+			this.$store.dispatch('ui/showUpload');
+		}
 	}
 };
 </script>
@@ -29,6 +50,12 @@ export default {
 	width: 100%;
 	background-color: color(IceLight);
 	padding: grid(1);
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	&__header {
+		display: flex;
+	}
 	&__logo {
 		background-color: color(Blue);
 		display: inline-block;
