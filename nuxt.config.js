@@ -37,7 +37,7 @@ module.exports = {
 	/*
 	 ** Plugins to load before mounting the App
 	 */
-	plugins: [{ src: '~/plugins/vuex-persist.js' }],
+	plugins: [{ src: '~/plugins/vuex-persist.js', ssr: false }],
 
 	/*
 	 ** Nuxt.js modules

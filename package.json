@@ -26,7 +26,8 @@
 		"guyn": "0.0.10",
 		"nuxt": "^2.6.1",
 		"nuxt-i18n": "^5.12.4",
-		"silicons": "^0.1.10"
+		"silicons": "^0.1.10",
+		"vuex-persist": "^2.0.1"
 	},
 	"devDependencies": {
 		"nuxt-rfg-icon": "^0.6.3",
