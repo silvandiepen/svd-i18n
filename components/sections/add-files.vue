@@ -34,7 +34,7 @@
 				</div>
 
 				<div class="hide">
-					<label>{{ $t('titles.files') }}</label>
+					<label>{{ $t('title.files') }}</label>
 					<input id="files" ref="files" accept=".json" type="file" multiple @change="handleFilesUpload()" />
 				</div>
 			</div>

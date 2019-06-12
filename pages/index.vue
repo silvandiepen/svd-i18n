@@ -3,6 +3,9 @@
 		<AddProject v-if="showAddProject"></AddProject>
 		<AddFiles v-if="showAddFiles"></AddFiles>
 		<ShowProject v-if="showProject"></ShowProject>
+		<section class="project-list__section">
+			<ProjectList></ProjectList>
+		</section>
 	</main>
 </template>
 
@@ -11,7 +14,8 @@ export default {
 	components: {
 		AddProject: () => import('~/components/sections/add-project.vue'),
 		AddFiles: () => import('~/components/sections/add-files.vue'),
-		ShowProject: () => import('~/components/sections/show-project.vue')
+		ShowProject: () => import('~/components/sections/show-project.vue'),
+		ProjectList: () => import('~/components/sections/project-list.vue')
 	},
 
 	computed: {
@@ -45,8 +49,10 @@ export default {
 .add-files,
 .new-project {
 	padding: grid(1) 0;
+	@media #{$small-only} {
+		padding: $mobile-padding;
+	}
 }
-
 .page {
 	width: 100%;
 	max-height: 100vh;

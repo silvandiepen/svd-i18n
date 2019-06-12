@@ -24,5 +24,9 @@ export default {
 	display: grid;
 	grid-template-columns: 320px auto;
 	grid-gap: 0px;
+	@media #{$medium-down} {
+		grid-template-columns: 1fr;
+		grid-template-rows: auto auto;
+	}
 }
 </style>

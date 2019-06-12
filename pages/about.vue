@@ -3,7 +3,7 @@
 		<div class="row center">
 			<div class="column small-full medium-two-third">
 				<h3>{{ $t('about.title') }}</h3>
-				<div v-html="$t('about.text')" />
+				<div>{{ $t('about.text') }}</div>
 			</div>
 		</div>
 	</section>

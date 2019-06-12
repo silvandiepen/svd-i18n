@@ -8,7 +8,7 @@
 			</h3>
 		</div>
 
-		<ProjectList></ProjectList>
+		<ProjectList class="header__projects"></ProjectList>
 		<div class="header__details">
 			<button v-if="currentSetName" class="button" @click="showAddFiles">
 				<span class="button__icon icon-add"></span>
@@ -20,14 +20,7 @@
 			</button>
 		</div>
 		<div class="header__footer">
-			<div class="language-selector">
-				<nuxt-link class="language-selector__link" to="/en">
-					{{ $t('language.english') }}
-				</nuxt-link>
-				<nuxt-link class="language-selector__link" to="/nl">
-					{{ $t('language.dutch') }}
-				</nuxt-link>
-			</div>
+			<LanguageSelector class="header__languages"></LanguageSelector>
 		</div>
 	</header>
 </template>
@@ -36,7 +29,8 @@
 import project from '~/package.json';
 export default {
 	components: {
-		ProjectList: () => import('~/components/sections/project-list.vue')
+		ProjectList: () => import('~/components/sections/project-list.vue'),
+		LanguageSelector: () => import('~/components/elements/language-selector.vue')
 	},
 	data() {
 		return {
@@ -48,7 +42,14 @@ export default {
 			get() {
 				return this.$store.getters['files/getCurrentProjectName'];
 			}
+		},
+		currentLanguage() {
+			return this.$store.state.i18n.locale;
 		}
+	},
+	mounted() {
+		console.log('hoiiii');
+		console.log(this.$i18n.locales);
 	},
 	methods: {
 		showAddFiles() {
@@ -63,6 +64,13 @@ export default {
 
 <style lang="scss">
 @import '~tools';
+
+.language-selector {
+	&__link {
+		display: block;
+		text-transform: uppercase;
+	}
+}
 
 .highlight {
 	position: fixed;
@@ -80,27 +88,39 @@ export default {
 	background-color: color(IceLight);
 	padding: 2rem;
 	display: flex;
-	flex-direction: column;
 	justify-content: space-between;
-	max-height: 100vh;
-	min-height: 100vh;
+	@media #{$medium-down} {
+		flex-direction: row;
+	}
+	@media #{$large-up} {
+		flex-direction: column;
+		max-height: 100vh;
+		min-height: 100vh;
+	}
+	&__projects {
+		@media #{$medium-down} {
+			display: none;
+		}
+	}
+	&__footer {
+		@media #{$medium-down} {
+			display: none;
+		}
+	}
 	&__languages {
 		padding-left: 1rem;
-	}
-	&__language {
-		border: 1px solid color(Skyblue);
-		background-color: color(Skyblue, 0.5);
-		padding: 0.25rem;
-		text-transform: uppercase;
-		display: inline-block;
-		font-size: 14px;
+		@media #{$medium-down} {
+			display: none;
+		}
 	}
 	&__details {
 		display: flex;
 		align-items: center;
 		flex-direction: column;
 		.button {
-			margin-top: 1rem;
+			@media #{$large-up} {
+				margin-top: 1rem;
+			}
 		}
 	}
 	&__logo {

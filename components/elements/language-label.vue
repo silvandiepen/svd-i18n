@@ -19,11 +19,7 @@ export default {
 	&--language {
 		background-color: color(IceDark);
 		color: color(White);
-		border-radius: $base-border-radius;
-		padding: 0.25rem;
-		font-size: 12px;
-		text-transform: uppercase;
-		font-weight: 500;
+
 		& + & {
 			margin-left: 0.5rem;
 		}

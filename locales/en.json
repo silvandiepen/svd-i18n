@@ -9,7 +9,8 @@
 	},
 	"buttons": {
 		"addfiles": "Add files",
-		"newproject": "New project"
+		"newproject": "New project",
+		"addproject": "Add project"
 	},
 	"strings": {
 		"addfilesto": "Add files to"
