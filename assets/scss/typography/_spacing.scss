@@ -1,5 +1,12 @@
 p {
-  & + p {
-    margin-top: 1rem;
+  & + p,
+    & + .button {
+      margin-top: 1rem;
   }
 }
+
+
+h4 + fieldset{
+  margin-top: 1rem;
+}
+

@@ -1,5 +1,7 @@
 <template>
-	<footer id="footer" class="footer"></footer>
+	<footer id="footer" class="footer">
+		A little project made by <a href="https://silvandiepen.nl">Sil van Diepen</a>
+	</footer>
 </template>
 
 <script>
@@ -13,5 +15,6 @@ export default {};
 .footer {
 	padding: grid(1);
 	text-align: center;
+	color: color(White, 0.25);
 }
 </style>

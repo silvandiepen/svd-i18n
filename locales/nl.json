@@ -1,0 +1,26 @@
+{
+	"about": {
+		"title": "Over i18n",
+		"text": "<p>Meer informatie over i18n</p>"
+	},
+	"language": {
+		"english": "Engels",
+		"dutch": "Nederlands"
+	},
+	"buttons": {
+		"addfiles": "Bestanden toevoegen",
+		"newproject": "Nieuw project",
+		"addproject": "Project toevoegen"
+	},
+	"strings": {
+		"addfilesto": "Bestanden toevoegen aan"
+	},
+	"title": {
+		"files": "Bestanden",
+		"yourprojectname": "Jouw project naam",
+		"yourprojects": "Jouw projecten"
+	},
+	"placeholder": {
+		"yourprojectname": "Jouw project naam"	
+	}
+}

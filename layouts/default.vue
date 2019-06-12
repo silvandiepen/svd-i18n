@@ -17,3 +17,12 @@ export default {
 	}
 };
 </script>
+
+<style lang="scss">
+@import '~tools';
+.layout {
+	display: grid;
+	grid-template-columns: 320px auto;
+	grid-gap: 0px;
+}
+</style>

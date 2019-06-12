@@ -44,15 +44,24 @@ export default {
 
 .add-files,
 .new-project {
-	border-radius: $base-border-radius;
-
 	padding: grid(1) 0;
 }
 
 .page {
+	width: 100%;
+	max-height: 100vh;
+	overflow: scroll;
+	min-height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: color(White);
 	// general page styles
 	&--home {
 		// specific home styles
+	}
+	section {
+		width: 100%;
 	}
 }
 .hide-upload {
@@ -84,42 +93,6 @@ fieldset {
 		display: flex;
 		flex-wrap: nowrap;
 		overflow: scroll;
-	}
-}
-
-.upload {
-	&__file {
-	}
-	&__list {
-		width: 100%;
-	}
-	&__actions {
-		position: absolute;
-		right: 0;
-		top: 0;
-		padding: 1rem;
-	}
-	&__item {
-		position: relative;
-		background-color: color(IceLight, 0.5);
-		border: 1px solid color(IceLight);
-		& + & {
-			margin-top: 0.25rem;
-		}
-		display: block;
-		padding: 1rem;
-		.icon-remove {
-			font-size: 12px;
-		}
-	}
-	&__buttons {
-		display: flex;
-		width: 100%;
-		justify-content: space-between;
-		padding: 1rem 0;
-	}
-	&__upload-button,
-	&__add-button {
 	}
 }
 </style>

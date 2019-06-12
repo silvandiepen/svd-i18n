@@ -11,8 +11,14 @@ export const mutations = {
 			Vue.set(state.set[state.current].data, file.filename.split('.')[0], file);
 		}
 	},
+	removeProject(state, project) {
+		console.log(state, project);
+	},
 	newProject(state, value) {
 		state.set[value] = { name: value, data: {} };
+		state.current = value;
+	},
+	setCurrentProject(state, value) {
 		state.current = value;
 	}
 };
@@ -34,11 +40,24 @@ export const getters = {
 		} else {
 			return null;
 		}
+	},
+	getProjectLanguages: (state) => (project) => {
+		if (state.set[project]) {
+			return Object.keys(state.set[project].data);
+		} else {
+			return null;
+		}
 	}
 };
 export const actions = {
 	createProject({ commit }, value) {
 		commit('newProject', value);
+	},
+	removeProject({ commit }, value) {
+		commit('removeProject', value);
+	},
+	setCurrentProject({ commit }, value) {
+		commit('setCurrentProject', value);
 	},
 	setProjectFiles({ commit }, value) {
 		commit('setFiles', value);

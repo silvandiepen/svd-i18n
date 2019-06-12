@@ -1,5 +1,5 @@
 <template>
-	<section class="files">
+	<section class="show-project">
 		<div class="row center">
 			<div class="column small-full">
 				<ul v-if="currentProject" class="files__list">
@@ -32,4 +32,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+@import '~tools';
+.show-project {
+	background-color: color(White);
+}
+</style>

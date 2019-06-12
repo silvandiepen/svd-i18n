@@ -1,26 +1,33 @@
 <template>
 	<header id="header" class="header">
-		<h3 class="header__logo">
-			i18n
-		</h3>
+		<div class="header__top">
+			<h3 class="header__logo">
+				<nuxt-link to="/">
+					i18n
+				</nuxt-link>
+			</h3>
+		</div>
+
+		<ProjectList></ProjectList>
 		<div class="header__details">
-			<h4 v-if="currentSetName">
-				{{ currentSetName }}
-			</h4>
-			<div v-if="currentSetLanguages" class="header__languages">
-				<span
-					v-for="(lang, index) in currentSetLanguages"
-					:key="index"
-					class="header__language"
-					:class="`header__language--${lang}`"
-				>
-					{{ lang }}
-				</span>
-			</div>
-			<button class="button" @click="showAddFiles">
+			<button v-if="currentSetName" class="button" @click="showAddFiles">
 				<span class="button__icon icon-add"></span>
-				<span class="button__text">Add files</span>
+				<span class="button__text">{{ $t('buttons.addfiles') }}</span>
 			</button>
+			<button class="button button--yellow" @click="showAddProject">
+				<span class="button__icon icon-add"></span>
+				<span class="button__text">{{ $t('buttons.newproject') }}</span>
+			</button>
+		</div>
+		<div class="header__footer">
+			<div class="language-selector">
+				<nuxt-link class="language-selector__link" to="/en">
+					{{ $t('language.english') }}
+				</nuxt-link>
+				<nuxt-link class="language-selector__link" to="/nl">
+					{{ $t('language.dutch') }}
+				</nuxt-link>
+			</div>
 		</div>
 	</header>
 </template>
@@ -28,6 +35,9 @@
 <script>
 import project from '~/package.json';
 export default {
+	components: {
+		ProjectList: () => import('~/components/sections/project-list.vue')
+	},
 	data() {
 		return {
 			projectName: project.name
@@ -38,16 +48,14 @@ export default {
 			get() {
 				return this.$store.getters['files/getCurrentProjectName'];
 			}
-		},
-		currentSetLanguages: {
-			get() {
-				return this.$store.getters['files/getCurrentProjectLanguages'];
-			}
 		}
 	},
 	methods: {
 		showAddFiles() {
 			this.$store.dispatch('ui/showAddFiles');
+		},
+		showAddProject() {
+			this.$store.dispatch('ui/showAddProject');
 		}
 	}
 };
@@ -66,19 +74,18 @@ export default {
 	z-index: 100;
 }
 .header {
-	// Header styles
-	// position: fixed;
 	top: 0;
 	left: 0;
-
 	width: 100%;
 	background-color: color(IceLight);
-	padding: grid(1);
+	padding: 2rem;
 	display: flex;
-	align-items: flex-start;
+	flex-direction: column;
 	justify-content: space-between;
+	max-height: 100vh;
+	min-height: 100vh;
 	&__languages {
-		border: 1px solid red;
+		padding-left: 1rem;
 	}
 	&__language {
 		border: 1px solid color(Skyblue);
@@ -91,8 +98,9 @@ export default {
 	&__details {
 		display: flex;
 		align-items: center;
+		flex-direction: column;
 		.button {
-			margin-left: 1rem;
+			margin-top: 1rem;
 		}
 	}
 	&__logo {
@@ -104,6 +112,9 @@ export default {
 		border-radius: 4px;
 		color: color(White);
 		text-shadow: 1px 1px 0 color(BlueDark);
+		a {
+			text-decoration: none;
+		}
 	}
 }
 </style>

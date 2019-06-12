@@ -42,17 +42,34 @@ module.exports = {
 	 */
 	modules: [
 		'nuxt-rfg-icon',
-		// '@nuxtjs/google-analytics',
-		'@nuxtjs/axios'
+		'@nuxtjs/google-analytics',
+		'@nuxtjs/pwa',
+		'@nuxtjs/axios',
+		[
+			'nuxt-i18n',
+			{
+				seo: true,
+				locales: [{ code: 'nl', iso: 'nl-NL', file: 'nl.json' }, { code: 'en', iso: 'en-GB', file: 'en.json' }],
+				strategy: 'prefix',
+				lazy: true,
+				langDir: 'locales/',
+				defaultLocale: 'en',
+				rootRedirect: 'en',
+				parsePages: false,
+				vuex: {
+					moduleName: 'i18n'
+				}
+			}
+		]
 	],
 
 	/*
 	 ** GoogleAnalytics module configuration
 	 */
-	// 'google-analytics': {
-	// 	id: 'UA-xxxxxxxx-xx',
-	// 	disabled: false
-	// },
+	'google-analytics': {
+		id: 'UA-456653-9',
+		disabled: false
+	},
 
 	/*
 	 ** Axios module configuration

@@ -4,20 +4,23 @@ h3,
 h4,
 h5,
 h6 {
-  color: inherit;
-  &.sub {
-    font-weight: 400;
-  }
+	color: inherit;
+	.sub,
+	&.sub {
+		font-weight: 400;
+	}
+	.sub {
+		opacity: 0.25;
+	}
 }
 
-
-h4{
-  font-size: rem(18);
+h4 {
+	font-size: rem(18);
 }
-h5{
-  font-size: 1rem;
+h5 {
+	font-size: 1rem;
 }
 
-h6{
-  font-size: rem(14);
+h6 {
+	font-size: rem(14);
 }

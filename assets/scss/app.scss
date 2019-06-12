@@ -14,3 +14,7 @@ $output: set-output(css, true);
 // Theme
 @import 'typography/typography';
 @import 'components/index';
+
+body,html{
+	background-color: color(PlumDark);
+}
