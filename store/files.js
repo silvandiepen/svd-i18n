@@ -12,7 +12,7 @@ export const mutations = {
 		}
 	},
 	removeProject(state, project) {
-		console.log(state, project);
+		delete state.set[project];
 	},
 	newProject(state, value) {
 		state.set[value] = { name: value, data: {} };

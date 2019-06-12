@@ -48,6 +48,9 @@
 			opacity: 0.5;
 		}
 	}
+	&--disabled{
+		opacity: 0.5; pointer-events: none; 
+	}
 	&--large {
 		padding: 0.5rem 1.5rem;
 	}

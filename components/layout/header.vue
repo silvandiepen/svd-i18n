@@ -8,18 +8,24 @@
 			</h3>
 		</div>
 
-		<ProjectList class="header__projects"></ProjectList>
-		<div class="header__details">
-			<button v-if="currentSetName" class="button" @click="showAddFiles">
-				<span class="button__icon icon-add"></span>
-				<span class="button__text">{{ $t('buttons.addfiles') }}</span>
-			</button>
-			<button class="button button--yellow" @click="showAddProject">
-				<span class="button__icon icon-add"></span>
-				<span class="button__text">{{ $t('buttons.newproject') }}</span>
-			</button>
+		<div v-if="currentSetName" class="header__projects">
+			<ProjectList></ProjectList>
 		</div>
+
 		<div class="header__footer">
+			<div class="header__details">
+				<!-- <button v-if="currentSetName" class="button" @click="showAddFiles">
+					<span class="button__icon icon-add"></span>
+					<span class="button__text">{{ $t('buttons.addfiles') }}</span>
+				</button> -->
+				<button class="button button--yellow" @click="showAddProject">
+					<span class="button__icon icon-add"></span>
+					<span class="button__text">{{ $t('buttons.newproject') }}</span>
+				</button>
+			</div>
+			<div class="header__export">
+				<ExportFiles></ExportFiles>
+			</div>
 			<LanguageSelector class="header__languages"></LanguageSelector>
 		</div>
 	</header>
@@ -30,7 +36,8 @@ import project from '~/package.json';
 export default {
 	components: {
 		ProjectList: () => import('~/components/sections/project-list.vue'),
-		LanguageSelector: () => import('~/components/elements/language-selector.vue')
+		LanguageSelector: () => import('~/components/elements/language-selector.vue'),
+		ExportFiles: () => import('~/components/elements/export-files.vue')
 	},
 	data() {
 		return {
@@ -47,10 +54,6 @@ export default {
 			return this.$store.state.i18n.locale;
 		}
 	},
-	mounted() {
-		console.log('hoiiii');
-		console.log(this.$i18n.locales);
-	},
 	methods: {
 		showAddFiles() {
 			this.$store.dispatch('ui/showAddFiles');
@@ -64,13 +67,6 @@ export default {
 
 <style lang="scss">
 @import '~tools';
-
-.language-selector {
-	&__link {
-		display: block;
-		text-transform: uppercase;
-	}
-}
 
 .highlight {
 	position: fixed;
@@ -86,7 +82,6 @@ export default {
 	left: 0;
 	width: 100%;
 	background-color: color(IceLight);
-	padding: 2rem;
 	display: flex;
 	justify-content: space-between;
 	@media #{$medium-down} {
@@ -97,12 +92,19 @@ export default {
 		max-height: 100vh;
 		min-height: 100vh;
 	}
+	&__top {
+		padding: 2rem;
+	}
 	&__projects {
+		height: 100vh;
+		padding: 2rem;
 		@media #{$medium-down} {
 			display: none;
 		}
 	}
 	&__footer {
+		padding: 2rem;
+		background-color: color(Plum);
 		@media #{$medium-down} {
 			display: none;
 		}
@@ -113,15 +115,19 @@ export default {
 			display: none;
 		}
 	}
+	&__export {
+		padding: 1rem;
+	}
 	&__details {
-		display: flex;
-		align-items: center;
-		flex-direction: column;
-		.button {
-			@media #{$large-up} {
-				margin-top: 1rem;
-			}
-		}
+		padding: 1rem;
+		// display: flex;
+		// align-items: center;
+		// flex-direction: column;
+		// .button {
+		// 	@media #{$large-up} {
+		// 		margin-top: 1rem;
+		// 	}
+		// }
 	}
 	&__logo {
 		background-color: color(Blue);
