@@ -2,7 +2,8 @@ import Vue from 'vue';
 
 export const state = () => ({
 	set: {},
-	current: null
+	current: null,
+	updatedProject: 0
 });
 
 export const mutations = {
@@ -44,6 +45,7 @@ export const mutations = {
 					break;
 			}
 		});
+		state.updatedProject = Date.now();
 	}
 };
 

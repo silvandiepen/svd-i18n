@@ -68,6 +68,7 @@ export default {
 			background-color: transparent;
 			border: none;
 			padding: 0.5rem;
+			width: 100%; 
 			&:focus {
 				outline: none;
 			}

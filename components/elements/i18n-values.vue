@@ -8,7 +8,7 @@
 		>
 			<template v-if="isGroup(value)">
 				<h6 class="i18n-data__key">
-					{{ key }}
+					<I18nValue :data="[key, value]" :child="true" :path="`${path}.${key}`" :counter="level + idx" />
 				</h6>
 				<I18nValues :path="`${path}.${key}`" :data="value" :level="level + idx" />
 			</template>
@@ -83,6 +83,9 @@ export default {
 		display: block;
 		& + ul {
 			margin: 0;
+		}
+		input{
+			font-size: 1rem; 
 		}
 	}
 	&__item {
