@@ -3,12 +3,12 @@
 		<div class="row center">
 			<div class="column small-full">
 				<ul v-if="currentProject" class="files__list">
-					<li v-for="(file, idx) in currentProject.data" :key="idx" class="files__file">
+					<li v-for="(value, key, idx) in currentProject.data" :key="idx" class="files__file">
 						<div class="i18n-data">
 							<h6 class="i18n-data__key">
-								{{ file.filename }}
+								{{ value.filename }}
 							</h6>
-							<i18nValues :data="file.data"></i18nValues>
+							<i18nValues :data="currentProject.data[key].data"></i18nValues>
 						</div>
 					</li>
 				</ul>

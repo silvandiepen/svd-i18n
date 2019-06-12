@@ -1,13 +1,21 @@
 <template>
 	<div class="i18n-data__values" :class="[highlightPath == path ? 'is-highlighted' : '']">
-		<input class="i18n-data__label" type="text" :value="data[0]" />
-		<input v-if="data[1].length < 100" class="i18n-data__value" type="text" :value="data[1]" @focus="highlightValue" />
+		<input class="i18n-data__label" type="text" :value="data[0]" @change="changingKey" />
+		<input
+			v-if="data[1].length < 100"
+			class="i18n-data__value"
+			type="text"
+			:value="data[1]"
+			:tabindex="counter"
+			@focus="highlightValue"
+		/>
 		<textarea
 			v-if="data[1].length > 99"
 			class="i18n-data__value"
 			type="text"
 			:value="data[1]"
 			resize="false"
+			:tabindex="counter"
 			@focus="highlightValue"
 		/>
 	</div>
@@ -23,6 +31,10 @@ export default {
 		path: {
 			type: String,
 			default: ''
+		},
+		counter: {
+			type: Number,
+			default: 0
 		}
 	},
 	computed: {
@@ -33,6 +45,10 @@ export default {
 	methods: {
 		highlightValue() {
 			this.$store.dispatch('ui/setHighlight', this.$props.path);
+		},
+		changingKey(e) {
+			console.log(e.target.value, this.path);
+			this.$store.dispatch('files/setKey', { value: e.target.value, path: this.path });
 		}
 	}
 };
@@ -65,6 +81,7 @@ export default {
 	}
 	&__label {
 		width: 30%;
+		font-family: courier;
 	}
 	&__value {
 		width: 70%;

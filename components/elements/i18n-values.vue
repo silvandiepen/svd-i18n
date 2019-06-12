@@ -10,10 +10,10 @@
 				<h6 class="i18n-data__key">
 					{{ key }}
 				</h6>
-				<I18nValues :path="`${path}.${key}`" :data="value" />
+				<I18nValues :path="`${path}.${key}`" :data="value" :level="level + idx" />
 			</template>
 			<template v-else>
-				<I18nValue :data="[key, value]" :child="true" :path="`${path}.${key}`" />
+				<I18nValue :data="[key, value]" :child="true" :path="`${path}.${key}`" :counter="level + idx" />
 			</template>
 		</li>
 	</ul>
@@ -32,6 +32,14 @@ export default {
 		data: {
 			type: [Array, Object],
 			default: () => []
+		},
+		counter: {
+			type: Number,
+			default: 0
+		},
+		level: {
+			type: Number,
+			default: 0
 		},
 		child: {
 			type: Boolean,

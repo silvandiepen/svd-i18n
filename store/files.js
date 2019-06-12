@@ -20,6 +20,30 @@ export const mutations = {
 	},
 	setCurrentProject(state, value) {
 		state.current = value;
+	},
+	setKey(state, value) {
+		Object.keys(state.set[state.current].data).forEach((idx) => {
+			let path = value.path.split('.');
+			const tempState = state.set[state.current].data[idx].data;
+			switch (path.length) {
+				case 2:
+					tempState[value.value] = tempState[path[1]];
+					delete tempState[path[1]];
+					break;
+				case 3:
+					tempState[path[1]][value.value] = tempState[path[1]][path[2]];
+					delete tempState[path[1]][path[2]];
+					break;
+				case 4:
+					tempState[path[1]][path[2]][value.value] = tempState[path[1]][path[2]][path[3]];
+					delete tempState[path[1]][path[2]][path[3]];
+					break;
+				case 5:
+					tempState[path[1]][path[2]][path[3]][value.value] = tempState[path[1]][path[2]][path[3]][path[4]];
+					delete tempState[path[1]][path[2]][path[3]][path[4]];
+					break;
+			}
+		});
 	}
 };
 
@@ -50,6 +74,9 @@ export const getters = {
 	}
 };
 export const actions = {
+	setKey({ commit }, value) {
+		commit('setKey', value);
+	},
 	createProject({ commit }, value) {
 		commit('newProject', value);
 	},
