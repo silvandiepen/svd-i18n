@@ -31,7 +31,9 @@ module.exports = {
 		color: '#000000' //,
 		// failedColor: '#000000'
 	},
-
+	generate: {
+		routes: ['/']
+	},
 	/*
 	 ** Plugins to load before mounting the App
 	 */

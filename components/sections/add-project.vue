@@ -13,7 +13,7 @@
 								@keyup.enter="saveProject()"
 							/>
 							<button v-if="project" class="button" @click="saveProject()">
-								<span class="button__text">{{ $t('button.addproject') }}</span>
+								<span class="button__text">{{ $t('buttons.addproject') }}</span>
 								<span class="button__icon icon-upload"></span>
 							</button>
 						</fieldset>
