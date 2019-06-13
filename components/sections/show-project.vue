@@ -39,7 +39,6 @@ export default {
 	},
 	watch: {
 		updatedProject: function() {
-			console.log('should rerender');
 			this.forceRerender();
 		}
 	},

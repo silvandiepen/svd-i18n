@@ -11,6 +11,7 @@ export const mutations = {
 		if (state.current) {
 			Vue.set(state.set[state.current].data, file.filename.split('.')[0], file);
 		}
+		state.updatedProject = Date.now();
 	},
 	removeProject(state, project) {
 		delete state.set[project];
@@ -18,6 +19,7 @@ export const mutations = {
 	newProject(state, value) {
 		state.set[value] = { name: value, data: {} };
 		state.current = value;
+		state.updatedProject = Date.now();
 	},
 	setCurrentProject(state, value) {
 		state.current = value;

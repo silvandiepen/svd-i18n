@@ -4,7 +4,7 @@
 			<div class="row center">
 				<div class="column small-full medium-two-third large-full">
 					<h4>{{ $t('title.yourprojects') }}</h4>
-					<ul class="project-list__list">
+					<ul v-if="renderComponent" class="project-list__list">
 						<li
 							v-for="(project, index) in projects"
 							:key="index"
@@ -34,12 +34,25 @@ export default {
 	components: {
 		LanguageLabel: () => import('~/components/elements/language-label.vue')
 	},
+	data() {
+		return {
+			renderComponent: true
+		};
+	},
 	computed: {
 		projects() {
 			return this.$store.state.files.set;
 		},
 		currentProject() {
 			return this.$store.getters['files/getCurrentProjectName'];
+		},
+		updatedProject() {
+			return this.$store.state.files.updatedProject;
+		}
+	},
+	watch: {
+		updatedProject: function() {
+			this.forceRerender();
 		}
 	},
 	methods: {
@@ -48,6 +61,15 @@ export default {
 		},
 		deleteProject(project) {
 			this.$store.dispatch('files/removeProject', project);
+		},
+		forceRerender() {
+			// Remove my-component from the DOM
+			this.renderComponent = false;
+
+			this.$nextTick(() => {
+				// Add the component back in
+				this.renderComponent = true;
+			});
 		}
 	}
 };
