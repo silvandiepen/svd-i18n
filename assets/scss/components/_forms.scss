@@ -7,3 +7,22 @@ textarea{
 	border-bottom: 3px solid color(Black,.1);
 	padding: .5rem;
 }
+
+.input-field{ 
+	label{
+		display: block;
+	padding: 1rem 0;	width: 120px;
+	}
+	input[type="text"]{
+border-radius: 3px; 
+		border: 1px solid color(Black,.25); 
+		line-height: 1; padding: 1rem; 
+		&:focus{
+			outline: none;
+			box-shadow: 0 0 1rem 0 color(Blue,.25);
+		}
+	}
+	& + .input-field{
+		margin-top: 1rem;
+	}
+}
