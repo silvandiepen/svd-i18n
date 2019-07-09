@@ -1,17 +1,8 @@
 <template>
 	<section class="show-project">
 		<div class="row center">
-			<div class="column small-full">
-				<ul v-if="currentProject && renderComponent" class="files__list">
-					<li v-for="(value, key, idx) in currentProject.data" :key="idx" class="files__file">
-						<div class="i18n-data">
-							<h6 class="i18n-data__key">
-								{{ value.filename }}
-							</h6>
-							<i18nValues :data="currentProject.data[key].data"></i18nValues>
-						</div>
-					</li>
-				</ul>
+			<div v-if="currentProject && renderComponent" class="column small-full">
+				<i18nPanels></i18nPanels>
 			</div>
 		</div>
 	</section>
@@ -20,7 +11,7 @@
 <script>
 export default {
 	components: {
-		i18nValues: () => import('~/components/elements/i18n-values.vue')
+		i18nPanels: () => import('~/components/elements/i18n-panels.vue')
 	},
 	data() {
 		return {
@@ -33,7 +24,7 @@ export default {
 		},
 		currentProject: {
 			get() {
-				return this.$store.getters['files/getCurrentProject'];
+				return this.$store.getters['files/PROJECT'];
 			}
 		}
 	},

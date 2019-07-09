@@ -36,6 +36,7 @@ module.exports = {
 			'no-trailing-spaces': 'warn',
 			'no-undef': 'warn',
 			'no-irregular-whitespace': 'warn',
+			'no-unused-vars': 'warn',
 			indent: [
 					'warn',
 					'tab',

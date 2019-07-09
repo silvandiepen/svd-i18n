@@ -23,7 +23,7 @@
 					<span class="button__text">{{ $t('buttons.newproject') }}</span>
 				</button>
 			</div>
-			<div class="header__export">
+			<div v-if="currentSetName" class="header__export">
 				<ExportFiles></ExportFiles>
 			</div>
 			<LanguageSelector class="header__languages"></LanguageSelector>
@@ -47,7 +47,7 @@ export default {
 	computed: {
 		currentSetName: {
 			get() {
-				return this.$store.getters['files/getCurrentProjectName'];
+				return this.$store.getters['files/PROJECT_NAME'];
 			}
 		},
 		currentLanguage() {

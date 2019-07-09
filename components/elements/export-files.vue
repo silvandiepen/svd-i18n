@@ -13,11 +13,11 @@ import FileSaver from 'file-saver';
 export default {
 	computed: {
 		files() {
-			return this.$store.getters['files/getCurrentProject'];
+			return this.$store.getters['files/PROJECT'];
 		},
 		visible() {
-			if (!this.$store.getters['files/getCurrentProject']) return false;
-			if (Object.keys(this.$store.getters['files/getCurrentProject'].data).length > 0) {
+			if (!this.$store.getters['files/PROJECT']) return false;
+			if (Object.keys(this.$store.getters['files/PROJECT'].data).length > 0) {
 				return true;
 			} else {
 				return false;

@@ -44,7 +44,7 @@ export default {
 			return this.$store.state.files.set;
 		},
 		currentProject() {
-			return this.$store.getters['files/getCurrentProjectName'];
+			return this.$store.getters['files/PROJECT_NAME'];
 		},
 		updatedProject() {
 			return this.$store.state.files.updatedProject;

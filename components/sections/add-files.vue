@@ -52,7 +52,7 @@ export default {
 	computed: {
 		currentProjectName: {
 			get() {
-				return this.$store.getters['files/getCurrentProjectName'];
+				return this.$store.getters['files/PROJECT_NAME'];
 			}
 		}
 	},
