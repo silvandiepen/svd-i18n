@@ -33,6 +33,11 @@ export const getters = {
 	PROJECT(state) {
 		return state.project;
 	},
+	PROJECT_NAME(state) {
+		return state.projects.filter((project) => {
+			return project.id == state.current;
+		})[0].name;
+	},
 	KEY(state) {
 		return state.key;
 	},

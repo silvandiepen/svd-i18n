@@ -1,6 +1,9 @@
 <template>
 	<div class="panels">
 		<div class="panels__panel">
+			<header class="panels__header">
+				<h4>{{ PROJECT_NAME }}</h4>
+			</header>
 			<ul v-if="PROJECT_KEYS" class="key-list__list">
 				<i18nPanelsList :keys="PROJECT_KEYS"></i18nPanelsList>
 			</ul>
@@ -32,6 +35,9 @@ export default {
 		PROJECT_KEYS() {
 			return this.$store.getters['project/PROJECT_KEYS'];
 		},
+		PROJECT_NAME() {
+			return this.$store.getters['project/PROJECT_NAME'];
+		},
 		CURRENT_LANGUAGES() {
 			return this.$store.getters['project/CURRENT_LANGUAGES'];
 		},
@@ -61,6 +67,11 @@ export default {
 .panels {
 	width: 100%;
 	display: flex;
+	&__header {
+		background-color: color(Dark);
+		padding: 1rem;
+		color: color(White);
+	}
 	&__panel {
 		width: 50%;
 		border-left: 2px solid color(Blue, 0.25);
@@ -91,6 +102,8 @@ export default {
 			width: 100%;
 			display: flex;
 			flex-direction: column;
+			max-height: 100vh;
+			overflow: scroll;
 		}
 		&__item {
 			width: 100%;
