@@ -4,22 +4,22 @@
 			<div class="row center">
 				<div class="column small-full medium-two-third large-full">
 					<h4>{{ $t('title.yourprojects') }}</h4>
-					<ul v-if="renderComponent" class="project-list__list">
+					<ul class="project-list__list">
 						<li
-							v-for="(project, index) in projects"
+							v-for="(project, index) in PROJECTS"
 							:key="index"
 							class="project-list__item"
-							:class="[currentProject == project.name ? 'project-list__item--current' : '']"
-							@click="setActiveProject(project.name)"
+							:class="[ACTIVE_PROJECT == project.id ? 'project-list__item--current' : '']"
+							@click="LOAD_PROJECT(project.id)"
 						>
 							<div class="project-list__content">
 								<h5>{{ project.name }}</h5>
-								<button class="button button--nude button--remove" @click="deleteProject(project.name)">
+								<button class="button button--nude button--remove" @click="DELETE_PROJECT(project.name)">
 									<span class="icon button__icon icon-remove"></span>
 								</button>
 							</div>
-							<div v-if="Object.keys(project.data).length > 0" class="project-list__languages">
-								<LanguageLabel v-for="(value, key) in project.data" :key="key" :lang="key"></LanguageLabel>
+							<div class="project-list__languages">
+								<LanguageLabel v-for="(lang, key) in project.languages" :key="key" :lang="lang"></LanguageLabel>
 							</div>
 						</li>
 					</ul>
@@ -34,42 +34,21 @@ export default {
 	components: {
 		LanguageLabel: () => import('~/components/elements/language-label.vue')
 	},
-	data() {
-		return {
-			renderComponent: true
-		};
-	},
 	computed: {
-		projects() {
-			return this.$store.state.files.set;
+		PROJECTS() {
+			return this.$store.getters['project/PROJECTS'];
 		},
-		currentProject() {
-			return this.$store.getters['files/PROJECT_NAME'];
-		},
-		updatedProject() {
-			return this.$store.state.files.updatedProject;
+		ACTIVE_PROJECT() {
+			return this.$store.getters['project/ACTIVE_PROJECT'];
 		}
 	},
-	watch: {
-		updatedProject: function() {
-			this.forceRerender();
-		}
-	},
-	methods: {
-		setActiveProject(project) {
-			this.$store.dispatch('files/setCurrentProject', project);
-		},
-		deleteProject(project) {
-			this.$store.dispatch('files/removeProject', project);
-		},
-		forceRerender() {
-			// Remove my-component from the DOM
-			this.renderComponent = false;
 
-			this.$nextTick(() => {
-				// Add the component back in
-				this.renderComponent = true;
-			});
+	methods: {
+		LOAD_PROJECT(project) {
+			this.$store.dispatch('project/LOAD_PROJECT', project);
+		},
+		DELETE_PROJECT(project) {
+			this.$store.dispatch('project/DELETE', project);
 		}
 	}
 };

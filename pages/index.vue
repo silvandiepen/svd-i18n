@@ -1,8 +1,8 @@
 <template>
 	<main class="page page--home">
-		<AddProject v-if="showAddProject"></AddProject>
-		<AddFiles v-if="showAddFiles"></AddFiles>
-		<ShowProject v-if="showProject"></ShowProject>
+		<!-- <AddProject v-if="showAddProject"></AddProject> -->
+		<!-- <AddFiles v-if="showAddFiles"></AddFiles> -->
+		<ShowProject v-if="PROJECT"></ShowProject>
 		<section class="project-list__section">
 			<ProjectList></ProjectList>
 		</section>
@@ -11,13 +11,13 @@
 
 <script>
 export default {
+	layout: 'app',
 	components: {
-		AddProject: () => import('~/components/sections/add-project.vue'),
-		AddFiles: () => import('~/components/sections/add-files.vue'),
+		// AddProject: () => import('~/components/sections/add-project.vue'),
+		// AddFiles: () => import('~/components/sections/add-files.vue'),
 		ShowProject: () => import('~/components/sections/show-project.vue'),
 		ProjectList: () => import('~/components/sections/project-list.vue')
 	},
-
 	computed: {
 		showAddProject: {
 			get() {
@@ -29,11 +29,14 @@ export default {
 				return this.$store.state.ui.showAddFiles;
 			}
 		},
-		showProject: {
+		PROJECT: {
 			get() {
-				return this.$store.state.ui.showProject;
+				return this.$store.getters['project/PROJECT'];
 			}
 		}
+	},
+	async asyncData({ store }) {
+		await store.dispatch('project/FETCH_PROJECTS');
 	}
 };
 </script>
@@ -55,9 +58,6 @@ export default {
 }
 .page {
 	width: 100%;
-	max-height: 100vh;
-	overflow: scroll;
-	min-height: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;

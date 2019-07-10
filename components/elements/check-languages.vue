@@ -2,7 +2,6 @@
 	<ul class="language-checks">
 		<li v-for="(lang, idx) in LANGUAGES" :key="idx" :class="['language-checks__item', checkStatus(lang) ? 'valid' : '']">
 			{{ lang }}
-			{{ checkStatus[lang] }}
 		</li>
 	</ul>
 </template>
@@ -17,17 +16,17 @@ export default {
 	},
 	computed: {
 		LANGUAGES() {
-			return this.$store.getters['files/CURRENT_LANGUAGES'];
+			return this.$store.getters['project/CURRENT_LANGUAGES'];
 		},
 		PROJECT() {
-			return this.$store.getters['files/PROJECT'];
+			return this.$store.getters['project/PROJECT'];
 		}
 	},
 	methods: {
 		checkStatus(lang) {
 			let exists = false;
 			if (this.$props.path.length > 0) {
-				const projectData = this.PROJECT.data[lang].data;
+				const projectData = this.PROJECT[lang];
 				const currentArray = this.$props.path.split('.');
 
 				switch (currentArray.length) {
@@ -63,12 +62,22 @@ export default {
 <style lang="scss">
 @import '~tools';
 .language-checks {
-	align-self: flex-end;
+	float: right;
 	&__item {
-		color: color(Red);
+		font-size: 10px;
+		font-weight: bold;
+		background-color: color(White);
+		padding: 0.25rem;
+		text-transform: uppercase;
+		border: 1px solid color(Black, 0.1);
+		border-radius: 3px;
+		opacity: 0.25;
+
+		& + & {
+			margin-left: 0.25rem;
+		}
 		&.valid {
-			color: color(Green);
-			// 	opacity: 1;
+			opacity: 1;
 		}
 	}
 }

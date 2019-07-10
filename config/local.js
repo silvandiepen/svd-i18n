@@ -1,4 +1,4 @@
 module.exports = {
-	env: 'development',
-	api: 'https://example.test/wp-json'
+	env: 'local',
+	api: 'https://api.poliglott.com/'
 };

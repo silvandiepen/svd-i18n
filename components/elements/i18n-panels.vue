@@ -1,17 +1,17 @@
 <template>
 	<div class="panels">
 		<div class="panels__panel">
-			<ul class="key-list__list">
+			<ul v-if="PROJECT_KEYS" class="key-list__list">
 				<i18nPanelsList :keys="PROJECT_KEYS"></i18nPanelsList>
 			</ul>
 		</div>
 		<div class="panels__panel">
 			<div class="content">
-				<h4>{{ currentKey }}</h4>
+				<h4>{{ KEY }}</h4>
 				<ul class="keys__list">
-					<li v-for="(lang, idx) in LANGUAGE_KEYS" :key="idx" class="keys__item">
-						<EditContent :language="lang" :content="currentValues[lang]"></EditContent>
-					</li>
+					<!-- <li v-for="(lang, idx) in CURRENT_LANGUAGES" :key="idx" class="keys__item"> -->
+					<!-- <EditContent :language="lang" :content="currentValues[lang]"></!-->
+					<!-- </li> -->
 				</ul>
 			</div>
 		</div>
@@ -21,30 +21,26 @@
 <script>
 export default {
 	components: {
-		EditContent: () => import('~/components/elements/edit-content.vue'),
 		i18nPanelsList: () => import('~/components/elements/i18n-panels-list.vue')
 	},
 	computed: {
-		project: {
+		PROJECT: {
 			get() {
-				return this.$store.getters['files/PROJECT'];
+				return this.$store.getters['project/PROJECT'];
 			}
 		},
 		PROJECT_KEYS() {
-			return this.$store.getters['files/PROJECT_KEYS'];
+			return this.$store.getters['project/PROJECT_KEYS'];
 		},
-		currentValues() {
-			return this.$store.getters['files/CURRENT_VALUES'];
+		CURRENT_LANGUAGES() {
+			return this.$store.getters['project/CURRENT_LANGUAGES'];
 		},
-		LANGUAGE_KEYS() {
-			return this.$store.getters['files/CURRENT_LANGUAGES'];
-		},
-		currentKey() {
-			return this.$store.state.files.currentKey;
+		KEY() {
+			return this.$store.getters['project/KEY'];
 		}
 	},
 	mounted() {
-		console.log(this.$route);
+		// console.log(this.$route);
 	},
 	methods: {
 		extend(obj, src) {
