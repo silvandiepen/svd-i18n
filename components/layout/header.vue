@@ -8,24 +8,19 @@
 			</h3>
 		</div>
 
-		<div v-if="currentSetName" class="header__projects">
+		<div v-if="PROJECTS" class="header__projects">
 			<ProjectList></ProjectList>
 		</div>
 
 		<div class="header__footer">
+			<UserPanel></UserPanel>
 			<div class="header__details">
-				<!-- <button v-if="currentSetName" class="button" @click="showAddFiles">
-					<span class="button__icon icon-add"></span>
-					<span class="button__text">{{ $t('buttons.addfiles') }}</span>
-				</button> -->
 				<button class="button button--yellow" @click="showAddProject">
 					<span class="button__icon icon-add"></span>
 					<span class="button__text">{{ $t('buttons.newproject') }}</span>
 				</button>
 			</div>
-			<div v-if="currentSetName" class="header__export">
-				<ExportFiles></ExportFiles>
-			</div>
+			<ExportFiles v-if="PROJECT"></ExportFiles>
 			<LanguageSelector class="header__languages"></LanguageSelector>
 		</div>
 	</header>
@@ -36,6 +31,7 @@ import project from '~/package.json';
 export default {
 	components: {
 		ProjectList: () => import('~/components/sections/project-list.vue'),
+		UserPanel: () => import('~/components/elements/user-panel.vue'),
 		LanguageSelector: () => import('~/components/elements/language-selector.vue'),
 		ExportFiles: () => import('~/components/elements/export-files.vue')
 	},
@@ -45,11 +41,17 @@ export default {
 		};
 	},
 	computed: {
-		currentSetName: {
+		PROJECTS: {
 			get() {
-				return this.$store.getters['files/PROJECT_NAME'];
+				return this.$store.getters['project/PROJECTS'];
 			}
 		},
+		PROJECT: {
+			get() {
+				return this.$store.getters['project/PROJECT'];
+			}
+		},
+
 		currentLanguage() {
 			return this.$store.state.i18n.locale;
 		}
@@ -103,7 +105,6 @@ export default {
 		}
 	}
 	&__footer {
-		padding: 2rem;
 		background-color: color(Plum);
 		@media #{$medium-down} {
 			display: none;

@@ -1,28 +1,32 @@
-textarea{
-	width: 100%; 
+textarea {
+	width: 100%;
 	border: 0;
 	height: 8rem;
-	box-shadow: 0 0 1rem 0 color(Black,.1); 
-	border-radius: 2px; 
-	border-bottom: 3px solid color(Black,.1);
-	padding: .5rem;
+	box-shadow: 0 0 1rem 0 color(Black, 0.1);
+	border-radius: 2px;
+	border-bottom: 3px solid color(Black, 0.1);
+	padding: 0.5rem;
 }
 
-.input-field{ 
-	label{
+.input-field {
+	label {
 		display: block;
-	padding: 1rem 0;	width: 120px;
+		padding: 1rem 0;
+		width: 120px;
 	}
-	input[type="text"]{
-border-radius: 3px; 
-		border: 1px solid color(Black,.25); 
-		line-height: 1; padding: 1rem; 
-		&:focus{
+	input[type='number'],
+	input[type='text'] {
+		font-size: 1rem;
+		border-radius: 3px;
+		border: 1px solid color(Black, 0.25);
+		line-height: 1;
+		padding: 1rem;
+		&:focus {
 			outline: none;
-			box-shadow: 0 0 1rem 0 color(Blue,.25);
+			box-shadow: 0 0 1rem 0 color(Blue, 0.25);
 		}
 	}
-	& + .input-field{
+	& + .input-field {
 		margin-top: 1rem;
 	}
 }

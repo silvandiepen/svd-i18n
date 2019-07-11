@@ -40,4 +40,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.export-file {
+	padding: 1rem;
+}
+</style>

@@ -2,6 +2,7 @@
 	<main class="page page--home">
 		<!-- <AddProject v-if="showAddProject"></AddProject> -->
 		<!-- <AddFiles v-if="showAddFiles"></AddFiles> -->
+		<ProjectStatus></ProjectStatus>
 		<ShowProject v-if="PROJECT"></ShowProject>
 		<section class="project-list__section">
 			<ProjectList></ProjectList>
@@ -15,6 +16,7 @@ export default {
 	components: {
 		// AddProject: () => import('~/components/sections/add-project.vue'),
 		// AddFiles: () => import('~/components/sections/add-files.vue'),
+		ProjectStatus: () => import('~/components/elements/project-status.vue'),
 		ShowProject: () => import('~/components/sections/show-project.vue'),
 		ProjectList: () => import('~/components/sections/project-list.vue')
 	},

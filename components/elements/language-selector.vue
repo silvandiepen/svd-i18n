@@ -17,6 +17,7 @@ export default {};
 
 .language-selector {
 	width: 100%;
+	padding: 1rem;
 	text-align: center;
 	&__link {
 		display: block;

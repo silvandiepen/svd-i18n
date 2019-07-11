@@ -57,7 +57,9 @@ export default {
 <style lang="scss">
 @import '~tools';
 .project-list {
-	padding: grid(2 0);
+	@media #{$medium-down} {
+		padding: grid(2 0);
+	}
 	background-color: color(IceLight);
 	@media #{$small-only} {
 		padding: $mobile-padding;
