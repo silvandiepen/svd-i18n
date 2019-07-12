@@ -4,25 +4,28 @@
 			<form v-if="user.status === 'login' || user.status === 'no-user'" @submit.prevent="loginCheck">
 				<h4>Login</h4>
 				<div class="input-field">
-					<input v-model="email" placeholder="email" type="text" autofocus />
+					<input v-model="email" placeholder="email" name="email" type="email" autofocus required />
 					<div class="message">
 						<small v-if="user.status === 'no-user'">This user doesn't exist.</small>
 					</div>
 				</div>
 				<div v-if="email" class="input-field">
 					<button class="button" @click="loginCheck">
-						<span class="button__text"> Send me a magic link</span>
+						<span class="button__text"> Send me a code</span>
 					</button>
 				</div>
 			</form>
-			<form v-if="user.status === 'check-code'" @submit.prevent="codeCheck">
+			<form v-if="user.status === 'check-code' || user.status == 'wrong-code'" @submit.prevent="codeCheck">
 				<h4>Check code</h4>
 				<p class="small">
 					You should receive a code in your email. Please enter that code here.
 				</p>
-				<div class="input-field">
+				<div class="input-field input-field--code">
 					<label>code</label>
 					<input v-model="code" min="1000" max="9999" type="number" autofocus />
+					<div class="message">
+						<small v-if="user.status === 'wrong-code'">Your code is wrong.</small>
+					</div>
 				</div>
 				<div v-if="code > -1" class="input-field">
 					<button class="button" @click="codeCheck">
@@ -65,7 +68,7 @@ export default {
 	watch: {
 		'user.status': function() {
 			const _this = this;
-			console.log('status changed to' + this.$store.state.user.status);
+			console.log('status changed to: ' + this.$store.state.user.status);
 			if (_this.$store.state.user.status === 'logged-in') {
 				console.log('go to the app');
 				setTimeout(() => {
@@ -120,6 +123,14 @@ export default {
 	@include min-(padding, 0.5, 32);
 	h4 {
 		padding: 1rem 0;
+	}
+}
+.input-field--code {
+	input {
+		width: 100%;
+		text-align: center;
+		font-size: 24px;
+		border-radius: 1.5rem;
 	}
 }
 </style>

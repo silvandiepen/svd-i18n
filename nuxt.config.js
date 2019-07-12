@@ -34,36 +34,22 @@ module.exports = {
 	generate: {
 		routes: ['/']
 	},
+
+	/*
+	 ** Router
+	 */
+	router: {
+		middleware: 'i18n'
+	},
 	/*
 	 ** Plugins to load before mounting the App
 	 */
-	plugins: [{ src: '~/plugins/vuex-persist.js', ssr: false }],
+	plugins: [{ src: '~/plugins/i18n.js', ssr: true }, { src: '~/plugins/vuex-persist.js', ssr: false }],
 
 	/*
 	 ** Nuxt.js modules
 	 */
-	modules: [
-		'nuxt-rfg-icon',
-		'@nuxtjs/google-analytics',
-		'@nuxtjs/pwa',
-		'@nuxtjs/axios',
-		[
-			'nuxt-i18n',
-			{
-				seo: true,
-				locales: [{ code: 'nl', iso: 'nl-NL', file: 'nl.json' }, { code: 'en', iso: 'en-GB', file: 'en.json' }],
-				strategy: 'prefix',
-				lazy: true,
-				langDir: 'locales/',
-				defaultLocale: 'en',
-				rootRedirect: 'en',
-				parsePages: false,
-				vuex: {
-					moduleName: 'i18n'
-				}
-			}
-		]
-	],
+	modules: ['nuxt-rfg-icon', '@nuxtjs/google-analytics', '@nuxtjs/pwa', '@nuxtjs/axios'],
 
 	/*
 	 ** GoogleAnalytics module configuration

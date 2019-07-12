@@ -34,6 +34,8 @@ export const state = () => ({
 	current_value: [],
 	current: 0,
 	UPDATE: 0,
+	key: null,
+	refresh: false,
 	status: {
 		saved: true,
 		changes: 0
@@ -45,10 +47,12 @@ export const mutations = {
 		state.projects = projects;
 		state.lastFetched = Date.time();
 		state.update = Date.now();
+		state.refresh = false;
 	},
 	SET_PROJECT(state, project) {
 		state.project = project.data;
 		state.current = project.id;
+		state.key = null;
 		state.update = Date.now();
 	},
 	SAVED_PROJECT(state) {
@@ -57,11 +61,25 @@ export const mutations = {
 	},
 	SET_KEY(state, key) {
 		state.key = key;
+		state.update = Date.now();
+	},
+	UNSET_KEY: (state) => {
+		state.key = null;
 	},
 	SET_VALUE(state, value) {
-		PATH_VALUE(state.project[value[0]], state.key.split('.'), value[1]);
-		state.status.saved = false;
+		if (state.key !== null && state.key.split('.')) {
+			PATH_VALUE(state.project[value[0]], state.key.split('.'), value[1]);
+		}
+	},
+	SET_CHANGE(state) {
 		state.status.changes = state.status.changes + 1;
+		state.status.saved = false;
+	},
+	DO_REFRESH: ({ state, dispatch }) => {
+		state.refresh = true;
+		dispatch('FETCH_PROJECTS');
+		dispatch('LOAD_PROJECT', state.current);
+		state.update = Date.now();
 	}
 };
 
@@ -79,19 +97,27 @@ export const getters = {
 			});
 			return project[0].name;
 		} else {
-			return '';
+			return state.current;
 		}
 	},
+
 	KEY: (state) => {
 		return state.key;
 	},
-	KEY_VALUE: (state) => (lang) => {
-		if (state.key) {
+	KEY_VALUE: (state) => (value) => {
+		if (value[1]) {
+			let path = value[1].split('.');
+			return PATH_VALUE(state.project[value[0]], path);
+		} else if (state.key) {
 			let path = state.key.split('.');
-			return PATH_VALUE(state.project[lang], path);
+			return PATH_VALUE(state.project[value[0]], path);
 		} else {
 			return '';
 		}
+	},
+	VALUE_TYPE: (state) => (key) => {
+		const value = PATH_VALUE(state.project['en'], key.split('.'));
+		return typeof value;
 	},
 	PROJECTS: (state) => {
 		return state.projects;
@@ -108,21 +134,34 @@ export const getters = {
 	}
 };
 export const actions = {
+	CHANGED({ commit }) {
+		commit('SET_CHANGE');
+	},
 	SET_KEY({ commit }, key) {
 		commit('SET_KEY', key);
+	},
+	UNSET_KEY({ commit }, key) {
+		commit('UNSET_KEY', key);
 	},
 	SET_VALUE({ commit }, value) {
 		commit('SET_VALUE', value);
 	},
-	async SAVE_PROJECT({ commit }) {
-		const dummy = { test: 'henk', test2: 'peter' };
+	REFRESH({ commit }) {
+		commit('DO_REFRESH');
+	},
+	async SAVE_PROJECT({ state, commit }) {
+		const formData = new FormData();
+		let projectID = state.current;
+		if (isNaN(projectID)) {
+			let project = state.projects.filter((project) => {
+				return project.name == state.current;
+			});
+			projectID = project[0].id;
+		}
+		formData.append('id', projectID);
+		formData.append('data', JSON.stringify(state.project));
 
-		const data = await this.$axios.$post(`/project/save`, {
-			params: {
-				id: state.current,
-				data: JSON.stringify(dummy)
-			}
-		});
+		const data = await this.$axios.$post(`/project/save`, formData);
 		console.log(data);
 		commit('SAVED_PROJECT', data);
 	},
@@ -131,14 +170,12 @@ export const actions = {
 		project.data = await this.$axios.$get(`/project/${id}`);
 		commit('SET_PROJECT', project);
 	},
-	async FETCH_PROJECTS({ state, commit }) {
-		if (!state.lastFetched || state.lastFetched + storeCache < Date.time()) {
-			const projects = await this.$axios.$get('/project/list', {
-				params: {
-					ID: 1
-				}
-			});
-			commit('SET_PROJECTS', projects);
-		}
+	async FETCH_PROJECTS({ commit }) {
+		const projects = await this.$axios.$get('/project/list', {
+			params: {
+				ID: 1
+			}
+		});
+		commit('SET_PROJECTS', projects);
 	}
 };

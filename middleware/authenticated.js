@@ -3,6 +3,7 @@ export default async function({ store, redirect }) {
 	// store.dispatch('user/CHECK_STATUS');
 
 	if (store.state.user.status !== 'logged-in') {
+		console.log(store.state.user);
 		if (store.state.i18n.locale) {
 			return redirect(`/${store.state.i18n.locale}/login`);
 		} else {

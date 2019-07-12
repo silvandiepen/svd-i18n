@@ -16,5 +16,6 @@ $output: set-output(css, true);
 @import 'components/index';
 
 body,html{
-	background-color: color(PlumDark);
+	background-color: color(Black);
+	background-image: linear-gradient(to bottom,#{color(Plum)},#{color(PlumDark)});
 }

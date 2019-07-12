@@ -10,6 +10,7 @@
 	border: 1px solid color(PurpleDark);
 	color: color(White);
 	border-radius: $base-border-radius;
+	box-shadow: 0 2px 0 0 darken(PurpleDark,10%);
 	&:focus {
 		background-color: color(PurpleLight);
 		outline: none;
@@ -42,6 +43,7 @@
 		color: color(Black); 
 		height: 2.5rem;
 		opacity: 0.25;
+		box-shadow: none;
 		&:focus,
 		&:hover{
 			background-color: transparent; 

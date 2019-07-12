@@ -1,39 +1,19 @@
 <template>
 	<main class="page page--home">
-		<!-- <AddProject v-if="showAddProject"></AddProject> -->
-		<!-- <AddFiles v-if="showAddFiles"></AddFiles> -->
-		<ProjectStatus></ProjectStatus>
-		<ShowProject v-if="PROJECT"></ShowProject>
-		<section class="project-list__section">
-			<ProjectList></ProjectList>
-		</section>
+		<div class="content">
+			<h3>Welcome</h3>
+		</div>
 	</main>
 </template>
 
 <script>
 export default {
 	layout: 'app',
-	components: {
-		// AddProject: () => import('~/components/sections/add-project.vue'),
-		// AddFiles: () => import('~/components/sections/add-files.vue'),
-		ProjectStatus: () => import('~/components/elements/project-status.vue'),
-		ShowProject: () => import('~/components/sections/show-project.vue'),
-		ProjectList: () => import('~/components/sections/project-list.vue')
-	},
+	components: {},
 	computed: {
-		showAddProject: {
+		PROJECTS: {
 			get() {
-				return this.$store.state.ui.showAddProject;
-			}
-		},
-		showAddFiles: {
-			get() {
-				return this.$store.state.ui.showAddFiles;
-			}
-		},
-		PROJECT: {
-			get() {
-				return this.$store.getters['project/PROJECT'];
+				return this.$store.getters['project/PROJECTS'];
 			}
 		}
 	},
@@ -65,9 +45,7 @@ export default {
 	align-items: center;
 	background-color: color(White);
 	// general page styles
-	&--home {
-		// specific home styles
-	}
+
 	section {
 		width: 100%;
 	}

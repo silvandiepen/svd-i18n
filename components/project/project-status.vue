@@ -2,11 +2,11 @@
 	<div class="project-status">
 		<button v-if="!STATUS.saved" class="button" @click="saveProject">
 			<span class="button__text">
-				<span>Save</span>
+				<span>{{ $t('buttons.save') }}</span>
 				<span>{{ STATUS.changes }}</span>
 			</span>
 		</button>
-		<span v-else>Up to date</span>
+		<span v-else>{{ $t('status.up-to-date') }}</span>
 	</div>
 </template>
 

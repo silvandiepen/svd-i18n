@@ -15,10 +15,10 @@
 		<div class="header__footer">
 			<UserPanel></UserPanel>
 			<div class="header__details">
-				<button class="button button--yellow" @click="showAddProject">
+				<nuxt-link class="button button--yellow" to="/new-project">
 					<span class="button__icon icon-add"></span>
 					<span class="button__text">{{ $t('buttons.newproject') }}</span>
-				</button>
+				</nuxt-link>
 			</div>
 			<ExportFiles v-if="PROJECT"></ExportFiles>
 			<LanguageSelector class="header__languages"></LanguageSelector>
@@ -30,7 +30,7 @@
 import project from '~/package.json';
 export default {
 	components: {
-		ProjectList: () => import('~/components/sections/project-list.vue'),
+		ProjectList: () => import('~/components/project/project-list.vue'),
 		UserPanel: () => import('~/components/elements/user-panel.vue'),
 		LanguageSelector: () => import('~/components/elements/language-selector.vue'),
 		ExportFiles: () => import('~/components/elements/export-files.vue')

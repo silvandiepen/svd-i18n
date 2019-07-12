@@ -1,31 +1,44 @@
 <template>
-	<div class="panels">
-		<div class="panels__panel">
-			<header class="panels__header">
-				<h4>{{ PROJECT_NAME }}</h4>
-			</header>
-			<ul v-if="PROJECT_KEYS" class="key-list__list key-list__list--parent">
-				<i18nPanelsList :keys="PROJECT_KEYS"></i18nPanelsList>
-			</ul>
-		</div>
-		<div class="panels__panel">
-			<div class="content">
-				<h4>{{ KEY }}</h4>
-				<ul class="keys__list">
-					<li v-for="(lang, idx) in CURRENT_LANGUAGES" :key="idx" class="keys__item">
-						<EditContent :language="lang"></EditContent>
-					</li>
-				</ul>
+	<section class="show-project">
+		<div class="row center">
+			<div v-if="renderComponent && PROJECT" class="column small-full">
+				<div class="panels">
+					<div class="panels__panel">
+						<header class="panels__header">
+							<h4 @click="unsetKey">
+								{{ PROJECT_NAME }}
+							</h4>
+							<button class="button button--purple button--icon" @click="refresh">
+								&#x21bb;
+							</button>
+						</header>
+						<ul v-if="PROJECT_KEYS" class="key-list__list key-list__list--parent">
+							<ProjectListKeys :keys="PROJECT_KEYS"></ProjectListKeys>
+						</ul>
+					</div>
+					<div class="panels__panel">
+						<div class="content">
+							<ProjectDetail v-if="!KEY"></ProjectDetail>
+							<EditKeys v-if="KEY" />
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
+	</section>
 </template>
 
 <script>
 export default {
 	components: {
-		EditContent: () => import('~/components/elements/edit-content.vue'),
-		i18nPanelsList: () => import('~/components/elements/i18n-panels-list.vue')
+		EditKeys: () => import('~/components/elements/edit-keys.vue'),
+		ProjectListKeys: () => import('~/components/project/project-list-keys.vue'),
+		ProjectDetail: () => import('~/components/project/project-detail.vue')
+	},
+	data() {
+		return {
+			renderComponent: true
+		};
 	},
 	computed: {
 		PROJECT: {
@@ -33,28 +46,39 @@ export default {
 				return this.$store.getters['project/PROJECT'];
 			}
 		},
+		UPDATE() {
+			return this.$store.state.project.update;
+		},
+
 		PROJECT_KEYS() {
 			return this.$store.getters['project/PROJECT_KEYS'];
 		},
 		PROJECT_NAME() {
 			return this.$store.getters['project/PROJECT_NAME'];
 		},
-		CURRENT_LANGUAGES() {
-			return this.$store.getters['project/CURRENT_LANGUAGES'];
-		},
 		KEY() {
 			return this.$store.getters['project/KEY'];
 		}
 	},
-	mounted() {
-		// console.log(this.$route);
+	watch: {
+		UPDATE: function() {
+			this.forceRerender();
+		}
 	},
 	methods: {
-		extend(obj, src) {
-			Object.keys(src).forEach(function(key) {
-				obj[key] = src[key];
+		forceRerender() {
+			// Remove my-component from the DOM
+			this.renderComponent = false;
+			this.$nextTick(() => {
+				// Add the component back in
+				this.renderComponent = true;
 			});
-			return obj;
+		},
+		unsetKey() {
+			this.$store.dispatch('project/UNSET_KEY');
+		},
+		refresh() {
+			this.$store.dispatch('project/REFRESH');
 		}
 	}
 };
@@ -62,13 +86,16 @@ export default {
 
 <style lang="scss">
 @import '~tools';
-.content {
-	padding: $mobile-padding;
+.show-project {
+	border-bottom: 1px solid color(Black, 0.1);
+	background-color: color(White);
 }
 .panels {
 	width: 100%;
 	display: flex;
 	&__header {
+		display: flex;
+		justify-content: space-between;
 		background-color: color(Dark);
 		padding: 1rem;
 		color: color(White);
