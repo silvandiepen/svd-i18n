@@ -1,7 +1,7 @@
 <template>
 	<div class="layout layout-login">
 		<div class="login">
-			<form v-if="user.status === 'login' || user.status === 'no-user'" @submit.prevent="loginCheck">
+			<form v-if="user.status === 'login' || user.status === 'no-user'" ref="loginform" @submit="loginCheck">
 				<h4>Login</h4>
 				<div class="input-field">
 					<input v-model="email" placeholder="email" name="email" type="email" autofocus required />
@@ -10,7 +10,7 @@
 					</div>
 				</div>
 				<div v-if="email" class="input-field">
-					<button class="button" @click="loginCheck">
+					<button class="button" @click="submitLogin">
 						<span class="button__text"> Send me a code</span>
 					</button>
 				</div>
@@ -68,7 +68,7 @@ export default {
 	watch: {
 		'user.status': function() {
 			const _this = this;
-			console.log('status changed to: ' + this.$store.state.user.status);
+			console.log('status changed to:' + this.$store.state.user.status);
 			if (_this.$store.state.user.status === 'logged-in') {
 				console.log('go to the app');
 				setTimeout(() => {
@@ -81,7 +81,11 @@ export default {
 		await store.dispatch('user/CHECK_STATUS');
 	},
 	methods: {
+		submitLogin() {
+			this.$refs.loginform.submit();
+		},
 		loginCheck() {
+			console.log('does this...');
 			this.$store.dispatch('user/CHECK_LOGIN', this.email);
 		},
 		codeCheck() {

@@ -35,7 +35,6 @@ export const mutations = {
 };
 export const actions = {
 	async CHECK_STATUS({ state, commit }) {
-		console.log('checking status');
 		if (state.user && state.user.status == 'logged-in') {
 			const logindata = await this.$axios.$get('/login/check', {
 				params: {
@@ -43,7 +42,6 @@ export const actions = {
 					session_id: status.user.session_id
 				}
 			});
-			console.log('logindata' + logindata);
 			if (logindata.status == 'logged-in') {
 				commit('LOGIN', logindata);
 			} else {
@@ -59,7 +57,6 @@ export const actions = {
 				email: email
 			}
 		});
-		console.log(logindata);
 		commit('LOGIN', logindata);
 	},
 	async LOGOUT({ commit }) {
@@ -81,7 +78,6 @@ export const actions = {
 				code: code
 			}
 		});
-		console.log(logindata);
 		commit('LOGIN', logindata);
 	}
 };
