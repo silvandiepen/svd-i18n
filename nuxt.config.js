@@ -32,6 +32,7 @@ module.exports = {
 		// failedColor: '#000000'
 	},
 	generate: {
+		fallback: true,
 		routes: ['/']
 	},
 
