@@ -6,7 +6,7 @@
 				<span>{{ STATUS.changes }}</span>
 			</span>
 		</button>
-		<span v-else>{{ $t('status.up-to-date') }}</span>
+		<span v-else class="project-status__text project-status__text--up-to-date">{{ $t('status.up-to-date') }}</span>
 	</div>
 </template>
 
@@ -27,10 +27,15 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .project-status {
 	position: fixed;
 	top: 1rem;
 	right: 1rem;
+	&__text {
+		&--up-to-date {
+			opacity: 0.25;
+		}
+	}
 }
 </style>

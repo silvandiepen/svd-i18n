@@ -90,6 +90,11 @@ export const getters = {
 	PROJECT: (state) => {
 		return state.project;
 	},
+	PROJECT_INFO: (state) => {
+		return state.projects.filter((project) => {
+			return project.name == state.current;
+		});
+	},
 	PROJECT_NAME: (state) => {
 		if (state.current > 0) {
 			let project = state.projects.filter((project) => {
