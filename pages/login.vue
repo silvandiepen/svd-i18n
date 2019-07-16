@@ -1,28 +1,36 @@
 <template>
 	<div class="layout layout-login">
 		<div class="login">
-			<form v-if="user.status === 'login' || user.status === 'no-user'" ref="loginform" @submit="loginCheck">
+			<div v-if="user.status === 'login' || user.status === 'no-user'">
 				<h4>Login</h4>
 				<div class="input-field">
-					<input v-model="email" placeholder="email" name="email" type="email" autofocus required />
+					<input
+						v-model="email"
+						placeholder="email"
+						name="email"
+						type="email"
+						autofocus
+						required
+						@keyup.enter="loginCheck"
+					/>
 					<div class="message">
 						<small v-if="user.status === 'no-user'">This user doesn't exist.</small>
 					</div>
 				</div>
 				<div v-if="email" class="input-field">
-					<button class="button" @click="submitLogin">
+					<button class="button" @click="loginCheck">
 						<span class="button__text"> Send me a code</span>
 					</button>
 				</div>
-			</form>
-			<form v-if="user.status === 'check-code' || user.status == 'wrong-code'" @submit.prevent="codeCheck">
+			</div>
+			<form v-if="user.status === 'check-code' || user.status == 'wrong-code'">
 				<h4>Check code</h4>
 				<p class="small">
 					You should receive a code in your email. Please enter that code here.
 				</p>
 				<div class="input-field input-field--code">
 					<label>code</label>
-					<input v-model="code" min="1000" max="9999" type="number" autofocus />
+					<input v-model="code" min="1000" max="9999" type="number" autofocus @keyup.enter="codeCheck" />
 					<div class="message">
 						<small v-if="user.status === 'wrong-code'">Your code is wrong.</small>
 					</div>
@@ -81,17 +89,16 @@ export default {
 		await store.dispatch('user/CHECK_STATUS');
 	},
 	methods: {
-		submitLogin() {
-			this.$refs.loginform.submit();
-		},
 		loginCheck() {
-			console.log('does this...');
+			console.log('Checking login..');
 			this.$store.dispatch('user/CHECK_LOGIN', this.email);
 		},
 		codeCheck() {
+			console.log('Checking code..');
 			this.$store.dispatch('user/CHECK_CODE', this.code);
 		},
 		goToApp() {
+			console.log('Go to the app..');
 			this.$router.push({
 				path: '/'
 			});

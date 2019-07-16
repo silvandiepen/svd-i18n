@@ -57,6 +57,7 @@ export const actions = {
 				email: email
 			}
 		});
+		console.log('checking login', logindata);
 		commit('LOGIN', logindata);
 	},
 	async LOGOUT({ commit }) {
@@ -71,13 +72,14 @@ export const actions = {
 		}
 	},
 	async CHECK_CODE({ state, commit }, code) {
-		console.log('checking code');
 		const logindata = await this.$axios.$get('/code', {
 			params: {
 				email: state.email,
 				code: code
 			}
 		});
+		console.log('checking code', logindata);
+
 		commit('LOGIN', logindata);
 	}
 };

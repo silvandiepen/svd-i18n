@@ -91,9 +91,13 @@ export const getters = {
 		return state.project;
 	},
 	PROJECT_INFO: (state) => {
-		return state.projects.filter((project) => {
-			return project.name == state.current;
-		});
+		if (state.current) {
+			return state.projects.filter((project) => {
+				return project.name == state.current;
+			});
+		} else {
+			return {};
+		}
 	},
 	PROJECT_NAME: (state) => {
 		if (state.current > 0) {
@@ -154,7 +158,7 @@ export const actions = {
 	REFRESH({ commit }) {
 		commit('DO_REFRESH');
 	},
-	async SAVE_PROJECT({ state, commit }) {
+	async SAVE_PROJECT({ commit, state }) {
 		const formData = new FormData();
 		let projectID = state.current;
 		if (isNaN(projectID)) {
@@ -167,20 +171,22 @@ export const actions = {
 		formData.append('data', JSON.stringify(state.project));
 
 		const data = await this.$axios.$post(`/project/save`, formData);
-		console.log(data);
 		commit('SAVED_PROJECT', data);
 	},
-	async LOAD_PROJECT({ commit }, id) {
+	async LOAD_PROJECT({ commit, state }, id) {
 		let project = { id: id };
-		project.data = await this.$axios.$get(`/project/${id}`);
+
+		const formData = new FormData();
+		formData.append('user', state.user);
+
+		project.data = await this.$axios.$get(`/project/${id}`, formData);
+		console.log(project.data);
 		commit('SET_PROJECT', project);
 	},
-	async FETCH_PROJECTS({ commit }) {
-		const projects = await this.$axios.$get('/project/list', {
-			params: {
-				ID: 1
-			}
-		});
+	async FETCH_PROJECTS({ commit, state }) {
+		const formData = new FormData();
+		formData.append('user', state.user);
+		const projects = await this.$axios.$get('/project/list', formData);
 		commit('SET_PROJECTS', projects);
 	}
 };
